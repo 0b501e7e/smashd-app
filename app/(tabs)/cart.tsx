@@ -31,7 +31,18 @@ export default function CartScreen() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#FFE4B5', dark: '#8B4513' }}
       headerImage={
-        <ThemedText style={styles.headerText}>Your Cart</ThemedText>
+        <ThemedView style={styles.headerContainer}>
+          <ThemedText style={[
+            styles.headerText, 
+            { 
+              padding: 20,
+              lineHeight: 48,
+              height: 100
+            }
+          ]}>
+            Your Cart
+          </ThemedText>
+        </ThemedView>
       }>
       <ThemedView style={styles.container}>
         {items.map(item => (
@@ -92,11 +103,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
   },
+  headerContainer: {
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   headerText: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 60,
   },
   cartItem: {
     padding: 16,

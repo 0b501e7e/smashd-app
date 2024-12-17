@@ -4,15 +4,21 @@ import { ThemedView } from '@/components/ThemedView';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Stack, router } from 'expo-router';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function OrderConfirmationScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
     <>
       <Stack.Screen options={{ 
         title: 'Order Confirmed',
         headerLeft: () => null, // Prevent going back
       }} />
-      <ThemedView style={styles.container}>
+      <ThemedView style={[
+        styles.container,
+        { paddingTop: insets.top + 20 }
+      ]}>
         <IconSymbol name="checkmark.circle.fill" size={80} color="#4CAF50" />
         <ThemedText style={styles.title}>Order Confirmed!</ThemedText>
         <ThemedText style={styles.message}>

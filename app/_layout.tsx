@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { AuthProvider } from '../contexts/AuthContext';
@@ -36,20 +37,53 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <AuthProvider>
-        <CartProvider>
-          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-              <Stack.Screen name="checkout" />
-              <Stack.Screen name="order-confirmation" />
-            </Stack>
-            <StatusBar style="auto" />
-          </ThemeProvider>
-        </CartProvider>
-      </AuthProvider>
-    </GestureHandlerRootView>
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <AuthProvider>
+          <CartProvider>
+            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+              <Stack 
+                screenOptions={{
+                  headerShown: false,
+                  contentStyle: { 
+                    backgroundColor: colorScheme === 'dark' ? '#000' : '#fff'
+                  }
+                }}>
+                <Stack.Screen name="index" />
+                <Stack.Screen 
+                  name="(tabs)" 
+                  options={{
+                    headerShown: false,
+                    animation: 'slide_from_right',
+                  }}
+                />
+                <Stack.Screen 
+                  name="(auth)"
+                  options={{
+                    headerShown: false,
+                    animation: 'slide_from_bottom',
+                  }}
+                />
+                <Stack.Screen 
+                  name="checkout"
+                  options={{
+                    headerShown: true,
+                    animation: 'slide_from_right',
+                  }}
+                />
+                <Stack.Screen 
+                  name="order-confirmation"
+                  options={{
+                    headerShown: true,
+                    animation: 'slide_from_right',
+                  }}
+                />
+              </Stack>
+              <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+            </ThemeProvider>
+          </CartProvider>
+        </AuthProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 }

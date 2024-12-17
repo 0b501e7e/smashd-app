@@ -39,30 +39,14 @@ export default function TabLayout() {
         name="cart"
         options={{
           title: 'Cart',
-          tabBarIcon: ({ color }) => (
-            <View>
-              <IconSymbol size={28} name="cart.fill" color={color} />
-              {itemCount > 0 && (
-                <View style={styles.badge}>
-                  <ThemedText style={styles.badgeText}>{itemCount}</ThemedText>
-                </View>
-              )}
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="orders"
-        options={{
-          title: 'Orders',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="clock.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="cart" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.circle" color={color} />,
         }}
       />
     </Tabs>

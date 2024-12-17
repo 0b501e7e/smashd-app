@@ -6,6 +6,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { Stack } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type CollectionTime = '15mins' | '30mins' | '45mins' | '60mins';
 
@@ -13,6 +14,7 @@ export default function CheckoutScreen() {
   const { items, total, clearCart } = useCart();
   const [selectedTime, setSelectedTime] = useState<CollectionTime>('30mins');
   const [isProcessing, setIsProcessing] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const handlePlaceOrder = async () => {
     setIsProcessing(true);
@@ -44,7 +46,10 @@ export default function CheckoutScreen() {
   return (
     <>
       <Stack.Screen options={{ title: 'Checkout' }} />
-      <ThemedView style={styles.container}>
+      <ThemedView style={[
+        styles.container, 
+        { paddingTop: insets.top + 20 }
+      ]}>
         <ThemedView style={styles.section}>
           <ThemedText type="subtitle">Order Summary</ThemedText>
           {items.map(item => (

@@ -6,9 +6,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { router } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
   const { isLoggedIn, logout } = useAuth();
+  const insets = useSafeAreaInsets();
 
   const handleLogin = () => {
     router.push('/(auth)/login');
@@ -20,7 +22,7 @@ export default function ProfileScreen() {
 
   if (!isLoggedIn) {
     return (
-      <ThemedView style={styles.container}>
+      <ThemedView style={[styles.container, { paddingTop: insets.top }]}>
         <ThemedText style={styles.message}>
           Please log in to view your profile and order history
         </ThemedText>
@@ -35,12 +37,14 @@ export default function ProfileScreen() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#E8E8E8', dark: '#2D2D2D' }}
       headerImage={
-        <IconSymbol
-          size={80}
-          color="#808080"
-          name="person.circle.fill"
-          style={styles.headerImage}
-        />
+        <ThemedView style={[styles.headerContainer, { marginTop: insets.top }]}>
+          <IconSymbol
+            size={80}
+            color="#808080"
+            name="person.circle"
+            style={styles.headerImage}
+          />
+        </ThemedView>
       }>
       <ThemedView style={styles.container}>
         <ThemedView style={styles.section}>
@@ -93,5 +97,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  headerContainer: {
+    alignItems: 'center',
   },
 });
